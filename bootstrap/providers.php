@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-use App\Providers\AppServiceProvider;
-use App\User\Providers\UserServiceProvider;
-
 return [
-    AppServiceProvider::class,
-    UserServiceProvider::class,
+    App\Product\Providers\ProductServiceProvider::class,
+    App\Providers\AppServiceProvider::class,
+    App\Providers\Filament\AdminPanelProvider::class,
+    App\User\Providers\UserServiceProvider::class,
 ];

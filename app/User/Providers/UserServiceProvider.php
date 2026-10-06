@@ -19,7 +19,5 @@ class UserServiceProvider extends ServiceProvider
         AuhtServiceInterface::class => AuthService::class,
     ];
 
-    public function boot(): void
-    {
-    }
+    public function boot(): void {}
 }
