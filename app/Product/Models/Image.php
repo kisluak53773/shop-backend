@@ -4,13 +4,18 @@ declare(strict_types=1);
 
 namespace App\Product\Models;
 
+use App\Category\Models\Category;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
 
-#[Fillable(['product_id', 'path', 'mobile_path', 'is_primary', 'sort_order', 'alt_text'])]
+#[Fillable([
+    'imageable_id', 'imageable_type',
+    'path', 'mobile_path',
+    'is_primary', 'sort_order', 'alt_text',
+])]
 class Image extends Model
 {
     public function casts(): array
@@ -21,9 +26,9 @@ class Image extends Model
         ];
     }
 
-    public function product(): BelongsTo
+    public function imageable(): MorphTo
     {
-        return $this->belongsTo(Product::class);
+        return $this->morphTo();
     }
 
     public function scopePrimary(Builder $query): Builder
@@ -52,6 +57,12 @@ class Image extends Model
 
             if (!empty($toDeleteArray)) {
                 Storage::disk('s3')->delete($toDeleteArray);
+            }
+        });
+
+        static::creating(function (Image $image): void {
+            if (!isset($image->is_primary) && $image->imageable_type === Category::class) {
+                $image->is_primary = true;
             }
         });
     }

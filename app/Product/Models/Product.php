@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Product\Models;
 
+use App\Category\Models\Category;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 #[Fillable(['name', 'description', 'price','stock_quantity'])]
@@ -22,13 +24,18 @@ class Product extends Model
         ];
     }
 
-    public function images(): HasMany
+    public function images(): MorphMany
     {
-        return $this->hasMany(Image::class);
+        return $this->morphMany(Image::class, 'imageable');
     }
 
-    public function primaryImage(): HasOne
+    public function primaryImage(): MorphOne
     {
-        return $this->hasOne(Image::class)->where('is_primary', true);
+        return $this->morphOne(Image::class, 'imageable')->where('is_primary', true);
+    }
+
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(Category::class);
     }
 }
