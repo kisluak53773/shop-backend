@@ -11,15 +11,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Casts\MoneyCast;
 
-#[Fillable(['name', 'description', 'price','stock_quantity'])]
+#[Fillable(['name', 'description', 'price_amount','stock_quantity'])]
 class Product extends Model
 {
     use SoftDeletes;
     public function casts(): array
     {
         return [
-            'price' => 'decimal:2',
+            'price_amount' => MoneyCast::class . ':price_currency',
+            'price_currency' => 'string',
             'stock_quantity' => 'integer',
         ];
     }

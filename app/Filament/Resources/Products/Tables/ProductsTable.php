@@ -30,8 +30,9 @@ class ProductsTable
                 TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('price')
-                    ->money('usd')
+                TextColumn::make('price_amount')
+                    ->label('Price')
+                    ->money('usd', divideBy: 100)
                     ->sortable(),
                 TextColumn::make('stock_quantity')
                     ->numeric()

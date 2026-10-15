@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\User\Http\Controllers\AuthController;
 use App\Product\Http\Controllers\ProductController;
 use App\Category\Http\Controllers\CategoryController;
+use App\Cart\Http\Controllers\CartController;
 
 //Auth routes
 Route::prefix('auth')->group(function (): void {
@@ -27,4 +28,13 @@ Route::prefix('product')->group(function (): void {
 Route::prefix('category')->group(function (): void {
     Route::get('/', [CategoryController::class, 'index'])->name('category.index');
     Route::get('/tree', [CategoryController::class, 'tree'])->name('category.tree');
+});
+
+//Cart routes
+Route::prefix('cart')->middleware('cart')->group(function (): void {
+    Route::get('/', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/item', [CartController::class, 'addItem'])->name('cart.addItem');
+    Route::put('/item/{itemId}', [CartController::class, 'updateItem'])->name('cart.updateItem');
+    Route::delete('/item/{itemId}', [CartController::class, 'removeItem'])->name('cart.removeItem');
+    Route::delete('/', [CartController::class, 'clear'])->name('cart.clear');
 });

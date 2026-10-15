@@ -12,6 +12,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
+use Brick\Money\Money;
 
 class ProductForm
 {
@@ -79,10 +80,37 @@ class ProductForm
                 Textarea::make('description')
                     ->columnSpanFull()
                     ->maxLength(1000),
-                TextInput::make('price')
+                TextInput::make('price_amount')
+                    ->label('Price')
                     ->required()
                     ->numeric()
-                    ->prefix('$'),
+                    ->minValue(0)
+                    ->step('0.01')
+                    ->prefix('$')
+                    ->helperText('Enter the price in dollars, e.g. 19.99')
+                    ->formatStateUsing(function ($state): ?string {
+                        if ($state === null) {
+                            return null;
+                        }
+
+                        if ($state instanceof Money) {
+                            return number_format(
+                                $state->getAmount()->toFloat(),
+                                2,
+                                '.',
+                                '',
+                            );
+                        }
+
+                        return number_format($state / 100, 2, '.', '');
+                    })
+                    ->dehydrateStateUsing(function ($state): ?int {
+                        if ($state === null || $state === '') {
+                            return null;
+                        }
+
+                        return (int) round((float) $state * 100);
+                    }),
                 TextInput::make('stock_quantity')
                     ->required()
                     ->integer()
