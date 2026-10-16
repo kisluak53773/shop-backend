@@ -20,8 +20,7 @@ class CartController extends Controller
 {
     public function __construct(
         private CartServiceInterface $cartService
-    )
-    {}
+    ) {}
 
     public function index(Request $request): CartResource
     {

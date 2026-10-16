@@ -13,8 +13,7 @@ class ResolveCartMiddleware
 {
     public const CART_HEADER = 'X-Cart-Token';
 
-    public function __construct(private CartServiceInterface $cartService)
-    {}
+    public function __construct(private CartServiceInterface $cartService) {}
 
     public function handle(Request $request, Closure $next): Response
     {

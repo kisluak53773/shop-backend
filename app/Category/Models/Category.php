@@ -64,7 +64,7 @@ class Category extends Model
 
     protected static function booted(): void
     {
-        static::creating(function (Category $category) {
+        static::creating(function (Category $category): void {
             if (empty($category->slug)) {
                 $category->slug = Str::slug($category->title);
             }

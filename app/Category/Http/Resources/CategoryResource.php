@@ -24,15 +24,15 @@ class CategoryResource extends JsonResource
             'productsCount' => $this->whenCounted('products'),
             'children' => $this->whenLoaded(
                 'childrenRecursive',
-                fn () => CategoryResource::collection($this->childrenRecursive)
+                fn() => CategoryResource::collection($this->childrenRecursive)
             ),
             'products' => $this->whenLoaded(
                 'products',
-                fn () => ProductResource::collection($this->products)
+                fn() => ProductResource::collection($this->products)
             ),
             'image' => $this->whenLoaded(
                 'image',
-                fn () => $this->image ? ImageResource::make($this->image) : null
+                fn() => $this->image ? ImageResource::make($this->image) : null
             ),
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,

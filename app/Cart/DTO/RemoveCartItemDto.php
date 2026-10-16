@@ -8,13 +8,12 @@ readonly class RemoveCartItemDto
 {
     public function __construct(
         public int $itemId,
-    )
-    {}
+    ) {}
 
     public static function fromArray(array $data): self
     {
         return new self(
-            itemId: (int)$data['itemId'],
+            itemId: (int) $data['itemId'],
         );
     }
 }

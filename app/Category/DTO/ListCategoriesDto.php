@@ -10,7 +10,7 @@ readonly class ListCategoriesDto
         public ?string $search = null,
         public ?int $parentId = null,
         public bool $onlyRoots = false,
-    ){}
+    ) {}
 
     public static function fromArray(array $data): self
     {

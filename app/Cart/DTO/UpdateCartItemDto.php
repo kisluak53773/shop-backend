@@ -9,14 +9,13 @@ readonly class UpdateCartItemDto
     public function __construct(
         public int $itemId,
         public int $quantity,
-    )
-    {}
+    ) {}
 
     public static function fromArray(array $data): self
     {
         return new self(
-            itemId: (int)$data['itemId'],
-            quantity: (int)$data['quantity'],
+            itemId: (int) $data['itemId'],
+            quantity: (int) $data['quantity'],
         );
     }
 }

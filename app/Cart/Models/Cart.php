@@ -31,7 +31,7 @@ class Cart extends Model
 
     public static function booted(): void
     {
-        static::creating(function (Cart $cart) {
+        static::creating(function (Cart $cart): void {
             if (!isset($cart->token)) {
                 $cart->token = Str::uuid();
             }

@@ -15,10 +15,10 @@ class CartServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    public $bindings= [
+    public $bindings = [
         CartServiceInterface::class => CartService::class,
     ];
-    
+
     public function register(): void
     {
         //

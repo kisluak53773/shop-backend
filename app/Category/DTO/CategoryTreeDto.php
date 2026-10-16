@@ -8,7 +8,7 @@ readonly class CategoryTreeDto
 {
     public function __construct(
         public ?string $search = null,
-    ){}
+    ) {}
 
     public static function fromArray(array $data): self
     {

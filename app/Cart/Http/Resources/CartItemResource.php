@@ -32,7 +32,7 @@ class CartItemResource extends JsonResource
                 'isOutOfStock' => $isOutOfStock,
                 'hasShortage' => $hasShortage,
             ],
-            'product' => ProductResource::make($this->product), 
+            'product' => ProductResource::make($this->product),
         ];
     }
 

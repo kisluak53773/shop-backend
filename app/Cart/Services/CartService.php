@@ -80,7 +80,7 @@ class CartService implements CartServiceInterface
             ->where('product_id', $dto->productId)
             ->first();
         $targetQuantity = ($existing?->quantity ?? 0) + $dto->quantity;
-        
+
         $this->guardStock($product, $targetQuantity);
 
         if (isset($existing)) {
@@ -100,12 +100,12 @@ class CartService implements CartServiceInterface
     public function updateItem(Cart $cart, UpdateCartItemDto $dto): Cart
     {
         $item = $cart->items()->with('product')->findOrFail($dto->itemId);
-        
+
         $this->guardStock($item->product, $dto->quantity);
 
         $item->update(['quantity' => $dto->quantity]);
         $cart->touch();
-        
+
         return $cart->fresh('items.product.primaryImage');
     }
 
@@ -131,7 +131,7 @@ class CartService implements CartServiceInterface
 
         foreach ($cart->items as $item) {
             $product = $item->product;
-            
+
             $available = (int) $product->stock_quantity;
 
             if ($item->quantity > $available) {

@@ -14,16 +14,14 @@ class CategoryService implements CategoryServiceInterface
 {
     public function __construct(
         private CategoryRepositoryInterface $categoryRepository
-    )
-    {
-    }
+    ) {}
 
     public function list(ListCategoriesDto $dto): Collection
     {
         return $this->categoryRepository->flat($dto);
     }
 
-    public function tree (CategoryTreeDto $dto): Collection
+    public function tree(CategoryTreeDto $dto): Collection
     {
         return $this->categoryRepository->tree($dto);
     }

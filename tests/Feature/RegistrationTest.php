@@ -9,6 +9,7 @@ use App\User\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
+
 class RegistrationTest extends TestCase
 {
     use RefreshDatabase;
@@ -25,9 +26,7 @@ class RegistrationTest extends TestCase
 
         $response->assertCreated();
 
-        Queue::assertPushed(WelcomeEmail::class, function (WelcomeEmail $mail): bool {
-            return $mail->user->email === 'test@example.com';
-        });
+        Queue::assertPushed(WelcomeEmail::class, fn(WelcomeEmail $mail): bool => $mail->user->email === 'test@example.com');
     }
 
     public function test_welcome_email_renders_the_user_name_and_shared_layout(): void

@@ -20,22 +20,22 @@ class CategoryRepository implements CategoryRepositoryInterface
             ->withCount('products')
             ->when(
                 $dto->search !== null && $dto->search !== '',
-                fn (Builder $query) => $query->where('title', 'like', '%' . $dto->search , '%')
+                fn(Builder $query) => $query->where('title', 'like', '%' . $dto->search, '%')
             )
             ->when(
                 $dto->onlyRoots,
-                fn (Builder $query) => $query->whereNull('parent_id')
+                fn(Builder $query) => $query->whereNull('parent_id')
             )
             ->when(
                 $dto->parentId !== null,
-                fn (Builder $query) => $query->where('parent_id', $dto->parentId)
+                fn(Builder $query) => $query->where('parent_id', $dto->parentId)
             )
             ->orderBy('sort_order')
             ->orderBy('title')
             ->get();
     }
 
-    public function tree (CategoryTreeDto $dto): Collection
+    public function tree(CategoryTreeDto $dto): Collection
     {
         return Category::query()
             ->whereNull('parent_id')
@@ -43,7 +43,7 @@ class CategoryRepository implements CategoryRepositoryInterface
             ->withCount('products')
             ->when(
                 $dto->search !== null && $dto->search !== '',
-                fn (Builder $query) => $query->where('title', 'like', '%' . $dto->search , '%')
+                fn(Builder $query) => $query->where('title', 'like', '%' . $dto->search, '%')
             )
             ->orderBy('sort_order')
             ->orderBy('title')

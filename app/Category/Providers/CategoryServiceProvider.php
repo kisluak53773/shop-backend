@@ -17,7 +17,7 @@ class CategoryServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    public $bindings= [
+    public $bindings = [
         CategoryRepositoryInterface::class => CategoryRepository::class,
         CategoryServiceInterface::class => CategoryService::class,
     ];
