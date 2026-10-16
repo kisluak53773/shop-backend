@@ -6,7 +6,7 @@ namespace App\User\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\User\Services\AuthService;
-use App\User\Services\Interfaces\AuhtServiceInterface;
+use App\User\Services\Interfaces\AuthServiceInterface;
 
 class UserServiceProvider extends ServiceProvider
 {
@@ -16,7 +16,7 @@ class UserServiceProvider extends ServiceProvider
     * @var array
     */
     public $bindings = [
-        AuhtServiceInterface::class => AuthService::class,
+        AuthServiceInterface::class => AuthService::class,
     ];
 
     public function boot(): void {}

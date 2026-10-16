@@ -34,7 +34,7 @@ class CartService implements CartServiceInterface
 
     public function attachToUser(User $user, ?string $token): Cart
     {
-        $userCart = Cart::findOrCreate(['user_id' => $user->id]);
+        $userCart = Cart::firstOrCreate(['user_id' => $user->id]);
 
         if ($token === null || $token === '') {
             return $userCart;
@@ -51,7 +51,7 @@ class CartService implements CartServiceInterface
 
         foreach ($guestCart->items as $guestItem) {
             $product = $guestItem->product;
-            $available = $product->stock ?? 0;
+            $available = $product->stock_quantity ?? 0;
             $existing = $userCart->items
                 ->where('product_id', $guestItem->product_id)
                 ->first();
@@ -69,8 +69,9 @@ class CartService implements CartServiceInterface
         }
 
         $guestCart->delete();
+        $userCart->touch();
 
-        return $userCart->touch();
+        return $userCart;
     }
 
     public function addItem(Cart $cart, AddCartItemDto $dto): Cart
@@ -146,8 +147,10 @@ class CartService implements CartServiceInterface
 
     private function guardStock(Product $product, int $quantity): void
     {
-        if ($quantity > ($product->stock ?? 0)) {
-            throw new InsufficientStockException($product, $quantity, $product->stock ?? 0);
+        $available = (int) $product->stock_quantity;
+
+        if ($quantity > $available) {
+            throw new InsufficientStockException($product, $quantity, $available);
         }
     }
 

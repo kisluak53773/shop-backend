@@ -8,7 +8,7 @@ use App\User\DTO\RegisterUserDto;
 use App\User\DTO\LoginUserDto;
 use App\User\Models\User;
 
-interface AuhtServiceInterface
+interface AuthServiceInterface
 {
     public function registerUser(RegisterUserDto $dto): User;
 

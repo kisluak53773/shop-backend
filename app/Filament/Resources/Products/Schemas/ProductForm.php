@@ -83,12 +83,13 @@ class ProductForm
                 TextInput::make('price_amount')
                     ->label('Price')
                     ->required()
-                    ->numeric()
-                    ->minValue(0)
-                    ->step('0.01')
                     ->prefix('$')
-                    ->helperText('Enter the price in dollars, e.g. 19.99')
-                    ->formatStateUsing(function ($state): ?string {
+                    ->type('number')
+                    ->inputMode('decimal')
+                    ->step('0.01')
+                    ->rule('numeric')
+                    ->rule('min:0')
+                    ->formatStateUsing(function (Money|int|string|null $state): ?string {
                         if ($state === null) {
                             return null;
                         }
@@ -102,9 +103,9 @@ class ProductForm
                             );
                         }
 
-                        return number_format($state / 100, 2, '.', '');
+                        return number_format(((int) $state) / 100, 2, '.', '');
                     })
-                    ->dehydrateStateUsing(function ($state): ?int {
+                    ->dehydrateStateUsing(function (mixed $state): ?int {
                         if ($state === null || $state === '') {
                             return null;
                         }

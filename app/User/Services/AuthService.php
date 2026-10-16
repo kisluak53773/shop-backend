@@ -6,14 +6,14 @@ namespace App\User\Services;
 
 use App\User\DTO\RegisterUserDto;
 use App\User\DTO\LoginUserDto;
-use App\User\Services\Interfaces\AuhtServiceInterface;
+use App\User\Services\Interfaces\AuthServiceInterface;
 use App\User\Models\User;
 use App\User\Exceptions\InvalidCredentialsException;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\User\Email\WelcomeEmail;
 
-class AuthService implements AuhtServiceInterface
+class AuthService implements AuthServiceInterface
 {
     public function registerUser(RegisterUserDto $dto): User
     {
