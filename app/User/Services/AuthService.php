@@ -22,6 +22,10 @@ class AuthService implements AuthServiceInterface
             'email' => $dto->email,
             'password' => $dto->password,
             'role' => $dto->role,
+            'phone' => $dto->phone,
+            'address' => $dto->address,
+            'city' => $dto->city,
+            'index' => $dto->index,
         ]);
 
         Mail::to($user->email)->send(new WelcomeEmail($user));

@@ -32,6 +32,10 @@ class RegisterUserRrequest extends FormRequest
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8'],
             'role' => ['sometimes', Rule::enum(UserRole::class)->only(UserRole::CUSTOMER)],
+            'phone' => ['nullable', 'string', 'max:20'],
+            'address' => ['nullable', 'string', 'max:255'],
+            'city' => ['nullable', 'string', 'max:255'],
+            'index' => ['nullable', 'string', 'max:255'],
         ];
     }
 }

@@ -13,6 +13,10 @@ readonly class RegisterUserDto
         public string $email,
         public string $password,
         public UserRole $role = UserRole::CUSTOMER,
+        public ?string $phone = null,
+        public ?string $address = null,
+        public ?string $city = null,
+        public ?string $index = null,
     ) {}
 
     public static function fromArray(array $data): self
@@ -21,7 +25,11 @@ readonly class RegisterUserDto
             name: $data['name'],
             email: $data['email'],
             password: $data['password'],
-            role: isset($data['role']) ? UserRole::from($data['role']) : UserRole::CUSTOMER
+            role: isset($data['role']) ? UserRole::from($data['role']) : UserRole::CUSTOMER,
+            phone: $data['phone'] ?? null,
+            address: $data['address'] ?? null,
+            city: $data['city'] ?? null,
+            index: $data['index'] ?? null,
         );
     }
 }

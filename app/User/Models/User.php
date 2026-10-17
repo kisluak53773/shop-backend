@@ -14,9 +14,21 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Enums\UserRole;
 use App\Cart\Models\Cart;
+use App\Order\Models\Order;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['name', 'email', 'password', 'role'])]
+#[Fillable([
+    'name', 
+    'email', 
+    'password', 
+    'role', 
+    'phone', 
+    'address', 
+    'city', 
+    'index',
+])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -24,7 +36,8 @@ class User extends Authenticatable
     use HasFactory;
     use Notifiable;
     use HasApiTokens;
-
+    use SoftDeletes;
+    
     public static function newFactory(): UserFactory
     {
         return UserFactory::new();
@@ -62,5 +75,10 @@ class User extends Authenticatable
     public function cart(): HasOne
     {
         return $this->hasOne(Cart::class);
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
     }
 }

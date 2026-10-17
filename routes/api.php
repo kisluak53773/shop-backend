@@ -7,6 +7,8 @@ use App\User\Http\Controllers\AuthController;
 use App\Product\Http\Controllers\ProductController;
 use App\Category\Http\Controllers\CategoryController;
 use App\Cart\Http\Controllers\CartController;
+use App\Order\Http\Controllers\OrderController;
+use App\Order\Http\Controllers\PaymentMethodController;
 
 //Auth routes
 Route::prefix('auth')->group(function (): void {
@@ -18,6 +20,8 @@ Route::prefix('auth')->group(function (): void {
         Route::post('/logout', [AuthController::class, 'logout'])->name('user.logout');
     });
 });
+
+Route::get('/payment-methods', [PaymentMethodController::class, 'index'])->name('payment.methods.index');
 
 //Product routes
 Route::prefix('product')->group(function (): void {
@@ -37,4 +41,10 @@ Route::prefix('cart')->middleware('cart')->group(function (): void {
     Route::put('/item/{itemId}', [CartController::class, 'updateItem'])->name('cart.updateItem');
     Route::delete('/item/{itemId}', [CartController::class, 'removeItem'])->name('cart.removeItem');
     Route::delete('/', [CartController::class, 'clear'])->name('cart.clear');
+});
+
+//Order routes
+Route::prefix('order')->group(function (): void {
+    Route::get('/', [OrderController::class, 'index'])->name('order.index')->middleware('auth:sanctum');
+    Route::post('/', [OrderController::class, 'store'])->name('order.store');
 });
