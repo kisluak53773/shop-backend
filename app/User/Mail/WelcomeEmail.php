@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\User\Email;
+namespace App\User\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;

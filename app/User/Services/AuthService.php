@@ -11,7 +11,7 @@ use App\User\Models\User;
 use App\User\Exceptions\InvalidCredentialsException;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use App\User\Email\WelcomeEmail;
+use App\User\Mail\WelcomeEmail;
 
 class AuthService implements AuthServiceInterface
 {

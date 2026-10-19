@@ -16,6 +16,8 @@ use Brick\Money\Money;
 use App\Order\Repositories\Interfaces\OrderRepositoryInterface;
 use App\Order\DTO\ListOrdersDto;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Mail;
+use App\Order\Mail\OrderConfirmationEmail;
 
 class OrderService implements OrderServiceInterface
 {
@@ -70,7 +72,11 @@ class OrderService implements OrderServiceInterface
             'total_amount' => $total->getMinorAmount()->toInt(),
         ]);
 
-        return $order->load('items', 'paymentMethod');
+        $order->load('items', 'paymentMethod');
+
+        Mail::to($order->customer_email)->send(new OrderConfirmationEmail($order));
+
+        return $order;
     }
 
     public function paginateUserOrders(ListOrdersDto $dto): LengthAwarePaginator
