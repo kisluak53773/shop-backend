@@ -14,6 +14,8 @@ use App\Order\Http\Controllers\PaymentMethodController;
 Route::prefix('auth')->group(function (): void {
     Route::post('/register', [AuthController::class, 'register'])->name('user.register');
     Route::post('/login', [AuthController::class, 'login'])->name('user.login');
+    Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])->name('user.forgotPassword');
+    Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('user.resetPassword');
 
     Route::middleware('auth:sanctum')->group(function (): void {
         Route::get('/me', [AuthController::class, 'me'])->name('user.me');
