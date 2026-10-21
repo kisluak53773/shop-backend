@@ -69,6 +69,6 @@ class CartController extends Controller
     private function cart(Request $request): Cart
     {
         return $request->attributes->get('cart')
-            ?? $this->cartService->resolve($request->user(), $request->header(ResolveCartMiddleware::CART_HEADER));
+            ?? $this->cartService->resolve(auth('sanctum')->user(), $request->header(ResolveCartMiddleware::CART_HEADER));
     }
 }

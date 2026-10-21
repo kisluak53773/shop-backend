@@ -34,7 +34,7 @@ class OrderController extends Controller
 
     public function store(CreateOrderRequest $request): OrderResource
     {
-        $user = $request->user();
+        $user = auth('sanctum')->user();
         $cartToken = $request->header(ResolveCartMiddleware::CART_HEADER);
         $data = $request->validated();
         $dto = CreateOrderDTO::fromArray($data);

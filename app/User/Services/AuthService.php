@@ -18,6 +18,7 @@ use App\User\Mail\WelcomeEmail;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Validation\ValidationException;
+use App\User\Exceptions\ResetPasswordException;
 
 class AuthService implements AuthServiceInterface
 {
@@ -78,9 +79,7 @@ class AuthService implements AuthServiceInterface
         );
 
         if ($status !== Password::PASSWORD_RESET) {
-            throw ValidationException::withMessages([
-                'email' => __($status),
-            ]);
+            throw new ResetPasswordException($status);
         }
     }
 }

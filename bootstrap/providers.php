@@ -9,4 +9,5 @@ return [
     App\Providers\AppServiceProvider::class,
     App\Providers\Filament\AdminPanelProvider::class,
     App\User\Providers\UserServiceProvider::class,
+    App\Order\Providers\OrderServiceProvider::class,
 ];

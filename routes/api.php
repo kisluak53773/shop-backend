@@ -23,6 +23,7 @@ Route::prefix('auth')->group(function (): void {
     });
 });
 
+//Payment method routes
 Route::get('/payment-methods', [PaymentMethodController::class, 'index'])->name('payment.methods.index');
 
 //Product routes

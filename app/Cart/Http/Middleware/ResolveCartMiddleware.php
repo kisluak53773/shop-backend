@@ -18,7 +18,7 @@ class ResolveCartMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $token = $request->header(self::CART_HEADER);
-        $user = $request->user();
+        $user = auth('sanctum')->user();
         $cart = $this->cartService->resolve($user, $token);
         $request->attributes->set('cart', $cart);
 

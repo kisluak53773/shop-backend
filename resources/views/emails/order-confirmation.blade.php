@@ -19,7 +19,7 @@
                     <span style="color: #6b7280; font-size: 13px;">Qty: {{ $item->quantity }}</span>
                 </td>
                 <td align="right" style="padding: 12px 0; color: #333;">
-                    {{ $item->total_amount->formatTo('en_US') }}
+                    {{ $item->total_amount->formatToLocale('en_US') }}
                 </td>
             </tr>
         @endforeach
@@ -31,7 +31,7 @@
                 Total:
             </td>
             <td align="right" width="100" style="padding: 4px 0; font-weight: bold; color: #111827; font-size: 18px;">
-                {{ $order->total_amount->formatTo('en_US') }}
+                {{ $order->total_amount->formatToLocale('en_US') }}
             </td>
         </tr>
         <tr>

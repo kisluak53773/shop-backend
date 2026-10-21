@@ -29,16 +29,15 @@ class CreateOrderAction
         }
 
         return DB::transaction(function () use ($user, $dto, $cartToken) {
-            $cart = Cart::query()
-                ->when(isset($user), function (Builder $query) use ($user) {
-                    $query->where('user_id', $user->id);
-                })
-                ->when($cartToken !== null && $cartToken !== '', function (Builder $query) use ($cartToken) {
-                    $query->where('token', $cartToken);
-                })
-                ->whereNull('user_id')
-                ->lockForUpdate()
-                ->first();
+            $query = Cart::query()->lockForUpdate();
+
+            if (isset($user)) {
+                $query->where('user_id', $user->id);
+            } else {
+                $query->where('token', $cartToken)->whereNull('user_id');
+            }
+            
+            $cart = $query->first();
 
             if (!isset($cart) || $cart->items()->count() === 0) {
                 throw new EmptyCartException();

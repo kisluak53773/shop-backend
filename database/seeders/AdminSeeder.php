@@ -15,7 +15,10 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->admin()->create([
+        User::updateOrCreate([
+            'email' => config('auth.super_admin.email'),
+        ],
+        [
             'name' => config('auth.super_admin.name'),
             'email' => config('auth.super_admin.email'),
             'password' => Hash::make(config('auth.super_admin.password')),

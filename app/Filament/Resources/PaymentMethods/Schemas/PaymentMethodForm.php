@@ -24,6 +24,10 @@ class PaymentMethodForm
                     ->required()
                     ->unique(ignoreRecord: true)
                     ->helperText('Unique identifier, e.g., cod, stripe, paypal'),
+                Toggle::make('is_active')
+                    ->label('Active')
+                    ->helperText('Whether the payment method is active and can be used to process payments')
+                    ->default(true),
                 Textarea::make('description')
                     ->label('Description')
                     ->columnSpanFull()
