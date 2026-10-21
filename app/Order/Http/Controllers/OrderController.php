@@ -20,8 +20,7 @@ class OrderController extends Controller
     public function __construct(
         private CreateOrderAction $createOrderAction,
         private OrderServiceInterface $orderService,
-    )
-    {}
+    ) {}
 
     public function index(ListOrdersRequest $request): AnonymousResourceCollection
     {
@@ -39,7 +38,7 @@ class OrderController extends Controller
         $data = $request->validated();
         $dto = CreateOrderDTO::fromArray($data);
         $order = $this->createOrderAction->execute($user, $dto, $cartToken);
-        
+
         return OrderResource::make($order);
     }
 }

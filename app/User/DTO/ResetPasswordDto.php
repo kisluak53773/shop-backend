@@ -7,10 +7,10 @@ namespace App\User\DTO;
 readonly class ResetPasswordDto
 {
     public function __construct(
-      public string $token,
-      public string $password,
-      public string $email,
-    ){}
+        public string $token,
+        public string $password,
+        public string $email,
+    ) {}
 
     public static function fromArray(array $data): self
     {

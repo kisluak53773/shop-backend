@@ -20,25 +20,17 @@ class OrdersTable
     {
         return $table
             ->columns([
-                TextColumn::make('number')
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('customer_email')
-                    ->label('Customer')
-                    ->searchable(),
-                TextColumn::make('customer_phone')
-                    ->label('Phone')
-                    ->searchable(),
+                TextColumn::make('number')->searchable()->sortable(),
+                TextColumn::make('customer_email')->label('Customer')->searchable(),
+                TextColumn::make('items_count')->label('Items')->counts('items')->badge(),
                 TextColumn::make('status')
                     ->badge()
-                    ->formatStateUsing(fn (OrderStatus $state) => $state->label()),
+                    ->formatStateUsing(fn(OrderStatus $state) => $state->label()),
                 TextColumn::make('total_amount')
                     ->label('Total')
-                    ->money('usd', divideBy: 100)
+                    ->formatStateUsing(fn($record) => $record->total_amount->formatToLocale('en_US'))
                     ->sortable(),
-                TextColumn::make('created_at')
-                    ->dateTime('d-m-Y H:i')
-                    ->sortable(),
+                TextColumn::make('created_at')->dateTime('d-m-Y H:i')->sortable(),
             ])
             ->filters([
                 TrashedFilter::make(),

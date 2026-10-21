@@ -87,7 +87,7 @@ class AuthController extends Controller
     {
         $data = $request->validated();
         $dto = ResetPasswordDto::fromArray($data);
-        
+
         $this->authService->resetPassword($dto);
 
         return response()->json(['message' => 'Password reset successfully']);

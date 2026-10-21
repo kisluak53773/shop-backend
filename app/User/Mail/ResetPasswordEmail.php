@@ -14,13 +14,13 @@ use App\User\Models\User;
 
 class ResetPasswordEmail extends Mailable implements ShouldQueue
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public function __construct(
         public User $user,
         public string $token,
-    )
-    {}
+    ) {}
 
     public function envelope(): Envelope
     {

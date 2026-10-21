@@ -18,12 +18,12 @@ readonly class ListOrdersDto
     public static function fromArray(array $data, int $userId): self
     {
         return new self(
-            userId:  $userId,
-            page:    (int) ($data['page'] ?? 1),
+            userId: $userId,
+            page: (int) ($data['page'] ?? 1),
             perPage: (int) ($data['perPage'] ?? 15),
-            status:  $data['status'] ?? null,
-            sort:    $data['sort'] ?? 'created_at',
-            order:   $data['order'] ?? 'desc',
+            status: $data['status'] ?? null,
+            sort: $data['sort'] ?? 'created_at',
+            order: $data['order'] ?? 'desc',
         );
     }
 }

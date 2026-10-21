@@ -24,7 +24,7 @@ class OrderServiceProvider extends ServiceProvider
         PaymentMethodServiceInterface::class => PaymentMethodService::class,
         OrderRepositoryInterface::class => OrderRepository::class,
     ];
-    
+
     public function register(): void
     {
         //

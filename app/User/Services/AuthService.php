@@ -67,7 +67,7 @@ class AuthService implements AuthServiceInterface
                 'email' => $dto->email,
                 'password' => $dto->password,
             ],
-            function (User $user, string $password) {
+            function (User $user, string $password): void {
                 $user->forceFill([
                     'password' => Hash::make($password),
                 ])->save();

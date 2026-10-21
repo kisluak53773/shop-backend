@@ -11,7 +11,7 @@ class ResetPasswordException extends Exception
 {
     public function __construct(
         public readonly string $status,
-    ){
+    ) {
         parent::__construct(
             message: "Failed to reset password: {$status}"
         );

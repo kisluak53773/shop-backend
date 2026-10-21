@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\Users\Tables;
 
 use Filament\Actions\BulkActionGroup;
@@ -17,7 +19,6 @@ use App\User\Actions\AnonymizeUserAction;
 use App\User\Models\User;
 use Filament\Actions\Action;
 
-
 class UsersTable
 {
     public static function configure(Table $table): Table
@@ -28,7 +29,7 @@ class UsersTable
                 TextColumn::make('email')->searchable()->sortable(),
                 TextColumn::make('role')
                     ->badge()
-                    ->formatStateUsing(fn ($state) => $state->label()),
+                    ->formatStateUsing(fn($state) => $state->label()),
                 TextColumn::make('phone')->searchable()->toggleable(),
                 TextColumn::make('created_at')->dateTime('d-m-Y')->sortable(),
             ])
@@ -43,11 +44,11 @@ class UsersTable
                     ->color('info')
                     ->requiresConfirmation()
                     ->modalDescription('This will send a password reset link to the user\'s email.')
-                    ->action(function (User $record) {
+                    ->action(function (User $record): void {
                         app(AuthServiceInterface::class)->forgotPassword(
                             new ForgotPasswordDto($record->email)
                         );
-                        
+
                         Notification::make()
                             ->title('Reset link sent successfully')
                             ->success()
@@ -60,7 +61,7 @@ class UsersTable
                     ->requiresConfirmation()
                     ->modalHeading('GDPR Data Erasure')
                     ->modalDescription('This will permanently anonymize all personal data. Financial records (orders) will be kept for legal compliance.')
-                    ->action(fn (User $record) => app(AnonymizeUserAction::class)->execute($record)),
+                    ->action(fn(User $record) => app(AnonymizeUserAction::class)->execute($record)),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

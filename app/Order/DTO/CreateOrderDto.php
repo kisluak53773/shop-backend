@@ -15,8 +15,7 @@ readonly class CreateOrderDto
         public ?string $customerCity,
         public ?string $customerIndex,
         public ?string $note,
-    )
-    {}
+    ) {}
 
     public static function fromArray(array $data): self
     {

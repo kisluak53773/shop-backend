@@ -13,8 +13,7 @@ class PaymentMethodController extends Controller
 {
     public function __construct(
         private PaymentMethodServiceInterface $paymentMethodService
-    )
-    {}
+    ) {}
 
     public function index(): AnonymousResourceCollection
     {

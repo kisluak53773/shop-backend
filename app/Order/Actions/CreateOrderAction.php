@@ -36,7 +36,7 @@ class CreateOrderAction
             } else {
                 $query->where('token', $cartToken)->whereNull('user_id');
             }
-            
+
             $cart = $query->first();
 
             if (!isset($cart) || $cart->items()->count() === 0) {
@@ -44,7 +44,7 @@ class CreateOrderAction
             }
 
             $this->cartService->assertCheckoutable($cart);
-            
+
             $order = $this->orderService->createOrder($user, $dto, $cart);
 
             $this->cartService->clear($cart);

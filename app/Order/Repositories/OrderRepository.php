@@ -18,7 +18,7 @@ class OrderRepository implements OrderRepositoryInterface
             ->with(['items', 'paymentMethod'])
             ->when(
                 $dto->status !== null,
-                fn ($query) => $query->where('status', $dto->status)
+                fn($query) => $query->where('status', $dto->status)
             )
             ->orderBy($dto->sort, $dto->order)
             ->paginate(

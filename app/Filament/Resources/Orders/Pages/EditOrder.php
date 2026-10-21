@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\Orders\Pages;
 
 use App\Filament\Resources\Orders\OrderResource;
@@ -19,5 +21,31 @@ class EditOrder extends EditRecord
             ForceDeleteAction::make(),
             RestoreAction::make(),
         ];
+    }
+
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        unset($data['total_amount']);
+        return $data;
+    }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        $data['total_amount'] = 0;
+        return $data;
+    }
+
+    protected function afterSave(): void
+    {
+        $order = $this->record;
+        $total = 0;
+
+        foreach ($order->items as $item) {
+            $itemTotal = $item->unit_price_amount->getMinorAmount()->toInt() * $item->quantity;
+            $item->update(['total_amount' => $itemTotal]);
+            $total += $itemTotal;
+        }
+
+        $order->update(['total_amount' => $total]);
     }
 }

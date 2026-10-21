@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use App\Enums\OrderStatus;
 use App\Casts\MoneyCast;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 #[Fillable([
     'number',
@@ -29,6 +30,8 @@ use App\Casts\MoneyCast;
 ])]
 class Order extends Model
 {
+    use SoftDeletes;
+
     public function casts(): array
     {
         return [

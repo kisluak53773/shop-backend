@@ -7,9 +7,10 @@ namespace App\Casts;
 use Brick\Money\Money;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Database\Eloquent\SerializesCastableAttributes;
 use InvalidArgumentException;
 
-class MoneyCast implements CastsAttributes
+class MoneyCast implements CastsAttributes, SerializesCastableAttributes
 {
     public function __construct(private readonly ?string $currencyColumn = null) {}
 
@@ -58,5 +59,18 @@ class MoneyCast implements CastsAttributes
         }
 
         return (string) config('shop.currency', 'USD');
+    }
+
+    public function serialize(Model $model, string $key, mixed $value, array $attributes): mixed
+    {
+        if ($value === null) {
+            return null;
+        }
+
+        if ($value instanceof Money) {
+            return $value->getMinorAmount()->toInt();
+        }
+
+        return $value;
     }
 }

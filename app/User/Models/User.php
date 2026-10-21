@@ -20,13 +20,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[Fillable([
-    'name', 
-    'email', 
-    'password', 
-    'role', 
-    'phone', 
-    'address', 
-    'city', 
+    'name',
+    'email',
+    'password',
+    'role',
+    'phone',
+    'address',
+    'city',
     'index',
 ])]
 #[Hidden(['password', 'remember_token'])]
@@ -37,7 +37,7 @@ class User extends Authenticatable
     use Notifiable;
     use HasApiTokens;
     use SoftDeletes;
-    
+
     public static function newFactory(): UserFactory
     {
         return UserFactory::new();

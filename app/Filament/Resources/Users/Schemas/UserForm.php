@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\Users\Schemas;
 
 use Filament\Schemas\Schema;
@@ -18,8 +20,8 @@ class UserForm
                     TextInput::make('name')->required()->maxLength(255),
                     TextInput::make('email')->email()->required()->unique(ignoreRecord: true)->maxLength(255),
                     Select::make('role')
-                        ->options(collect(UserRole::cases())->mapWithKeys(fn ($role) => [
-                            $role->value => $role->label()
+                        ->options(collect(UserRole::cases())->mapWithKeys(fn($role) => [
+                            $role->value => $role->label(),
                         ]))
                         ->required(),
                 ])->columns(2),

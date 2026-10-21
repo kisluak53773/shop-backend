@@ -18,7 +18,7 @@ class PaymentMethod extends Model
             'is_active' => 'boolean',
         ];
     }
-    
+
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);

@@ -26,7 +26,7 @@ class PamentMethodSeeder extends Seeder
                 'code' => 'pay_at_pickup',
                 'description' => 'Pick up your order at our store and pay there.',
                 'is_active' => true,
-            ]
+            ],
         ];
 
         foreach ($methods as $method) {
