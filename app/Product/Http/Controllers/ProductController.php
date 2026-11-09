@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace App\Product\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Product\DTO\TrendingProductsDto;
 use App\Product\DTO\ListProductsDto;
+use App\Product\Http\Requests\TrendingProductsRequest;
 use App\Product\Http\Requests\ListProductsRequest;
 use App\Product\Services\Interfaces\ProductServiceInterface;
 use App\Product\Http\Resources\ProductResource;
+use App\Product\Models\Product;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ProductController extends Controller
@@ -22,6 +25,22 @@ class ProductController extends Controller
         $data = $request->validated();
         $paginationDto = ListProductsDto::fromArray($data);
         $products = $this->productService->paginated($paginationDto);
+
+        return ProductResource::collection($products);
+    }
+
+    public function show(Product $product): ProductResource
+    {
+        $product->load(['images', 'categories']);
+
+        return ProductResource::make($product);
+    }
+
+    public function trending(TrendingProductsRequest $request): AnonymousResourceCollection
+    {
+        $data = $request->validated();
+        $paginationDto = TrendingProductsDto::fromArray($data);
+        $products = $this->productService->trending($paginationDto);
 
         return ProductResource::collection($products);
     }

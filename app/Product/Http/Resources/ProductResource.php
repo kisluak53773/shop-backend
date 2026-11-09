@@ -8,6 +8,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Request;
 use App\Product\Http\Resources\ImageResource;
 use Brick\Money\Money;
+use App\Category\Http\Resources\CategoryResource;
 
 /** @mixin \App\Product\Models\Product */
 class ProductResource extends JsonResource
@@ -24,6 +25,8 @@ class ProductResource extends JsonResource
                 fn() => $this->primaryImage
                 ? ImageResource::make($this->primaryImage) : null
             ),
+            'images' => $this->whenLoaded('images', fn() => ImageResource::collection($this->images)),
+            'categories' => $this->whenLoaded('categories', fn() => CategoryResource::collection($this->categories)),
             'stockQuantity' => $this->stock_quantity,
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at,

@@ -29,6 +29,8 @@ Route::get('/payment-methods', [PaymentMethodController::class, 'index'])->name(
 //Product routes
 Route::prefix('product')->group(function (): void {
     Route::get('/', [ProductController::class, 'index'])->name('product.index');
+     Route::get('/trending', [ProductController::class, 'trending'])->name('product.trending');
+    Route::get('/{product}', [ProductController::class, 'show'])->name('product.show');
 });
 
 //Category routes
